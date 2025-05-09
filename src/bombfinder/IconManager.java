@@ -5,6 +5,10 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Manages and loads icons for the BombFinder game, such as bomb, flag, and mine number icons.
+ * Icons are loaded from resources, scaled to a uniform size, and stored for use in the game UI.
+ */
 public class IconManager {
     private ImageIcon bomb;
     private ImageIcon flag;
@@ -14,22 +18,36 @@ public class IconManager {
     private ImageIcon frameIcon;
     private static final int ICONSIZE = 30;
 
+    /**
+     * Constructs an IconManager and initializes all game icons.
+     * Loads icons for bomb, flag, incorrect flag, unseen cells, and mine numbers (1-8).
+     */
     public IconManager() {
+        // Load individual icons using the loadIcon method
         bomb = loadIcon("bomb");
         flag = loadIcon("flag");
         incorrectFlag = loadIcon("incorrect_flag");
         unseen = loadIcon("unseen");
         frameIcon = loadIcon("bomb");
         
+        // Initialize the mineNumber array (0-8, where 0 is null for no mines)
         mineNumber = new ImageIcon[9];
-        mineNumber[0] = null;
+        mineNumber[0] = null; // No icon for zero mines
         for (int i = 1; i <= 8; i++) {
-            mineNumber[i] = loadIcon("mine_" + i);
+            mineNumber[i] = loadIcon("mine_" + i); // Load icons for numbers 1-8
         }
     }
 
+    /**
+     * Loads an icon from the specified resource path and scales it to the predefined size.
+     * Attempts multiple possible paths to locate the icon file.
+     *
+     * @param iconName the name of the icon file (without path or extension)
+     * @return the scaled ImageIcon, or null if the icon could not be loaded
+     */
     public ImageIcon loadIcon(String iconName) {
         try {
+            // Define possible resource paths to locate the icon
             String[] possiblePaths = {
                 "/icons/" + iconName + ".png",
                 "icons/" + iconName + ".png",
@@ -39,14 +57,16 @@ public class IconManager {
                 iconName + ".png"
             };
             
+            // Try to load the icon using getResourceAsStream
             InputStream stream = null;
             for (String path : possiblePaths) {
                 stream = getClass().getResourceAsStream(path);
                 if (stream != null) {
-                    break;
+                    break; // Exit loop if a valid stream is found
                 }
             }
             
+            // If not found, try using the class loader
             if (stream == null) {
                 for (String path : possiblePaths) {
                     stream = getClass().getClassLoader().getResourceAsStream(path);
@@ -56,25 +76,29 @@ public class IconManager {
                 }
             }
             
+            // Return null if no valid stream is found
             if (stream == null) {
                 return null;
             }
 
+            // Read the image data from the stream
             byte[] imageBytes = stream.readAllBytes();
             stream.close();
             
+            // Create an ImageIcon from the image data
             ImageIcon icon = new ImageIcon(imageBytes);
             if (icon.getIconWidth() <= 0) {
-                return null;
+                return null; // Return null if the icon is invalid
             }
             
+            // Scale the image to the predefined size (ICONSIZE x ICONSIZE)
             Image scaledImage = icon.getImage().getScaledInstance(ICONSIZE, ICONSIZE, Image.SCALE_SMOOTH);
             return new ImageIcon(scaledImage);
             
         } catch (IOException e) {
-            return null;
+            return null; // Return null if an I/O error occurs
         } catch (Exception e) {
-            return null;
+            return null; // Return null for any other unexpected errors
         }
     }
 
