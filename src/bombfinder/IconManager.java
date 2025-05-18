@@ -5,10 +5,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Manages and loads icons for the BombFinder game, such as bomb, flag, and mine number icons.
- * Icons are loaded from resources, scaled to a uniform size, and stored for use in the game UI.
- */
+// Manages and loads icons for the game, such as bomb, flag, and mine number icons.
+
 public class IconManager {
     private ImageIcon bomb;
     private ImageIcon flag;
@@ -18,10 +16,8 @@ public class IconManager {
     private ImageIcon frameIcon;
     private static final int ICONSIZE = 30;
 
-    /**
-     * Constructs an IconManager and initializes all game icons.
-     * Loads icons for bomb, flag, incorrect flag, unseen cells, and mine numbers (1-8).
-     */
+    //Constructs an IconManager and initializes all game icons.
+
     public IconManager() {
         // Load individual icons using the loadIcon method
         bomb = loadIcon("bomb");
@@ -37,14 +33,7 @@ public class IconManager {
             mineNumber[i] = loadIcon("mine_" + i); // Load icons for numbers 1-8
         }
     }
-
-    /**
-     * Loads an icon from the specified resource path and scales it to the predefined size.
-     * Attempts multiple possible paths to locate the icon file.
-     *
-     * @param iconName the name of the icon file (without path or extension)
-     * @return the scaled ImageIcon, or null if the icon could not be loaded
-     */
+    
     public ImageIcon loadIcon(String iconName) {
         try {
             // Define possible resource paths to locate the icon
