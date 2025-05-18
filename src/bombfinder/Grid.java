@@ -310,7 +310,7 @@ public class Grid extends JFrame {
         restartButton.setFont(new Font(restartButton.getFont().getName(), Font.BOLD, 14));
     }
 
-    private boolean checkWin() {
+    boolean checkWin() {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if (!bombs[i][j] && !revealed[i][j]) {
@@ -359,5 +359,49 @@ public class Grid extends JFrame {
         grid.repaint();
         
         System.out.println("Game restarted with " + NUM_BOMBS + " bombs");
+    }
+    
+    public int getRows() {
+        return ROWS;
+    }
+
+    public int getCols() {
+        return COLS;
+    }
+
+    public int getNumBombs() {
+        return NUM_BOMBS;
+    }
+
+    public JPanel getControlPanel() {
+        return controlPanel;
+    }
+
+    public boolean[][] getBombs() {
+        return bombs;
+    }
+
+    public boolean[][] getRevealed() {
+        return revealed;
+    }
+
+    public boolean[][] getFlagged() {
+        return flagged;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public int getAdjacentBombs(int row, int col) {
+        return countAdjacentBombs(row, col);
+    }
+
+    public void revealCellProgrammatically(int row, int col) {
+        revealCell(row, col);
+    }
+
+    public void flagCellProgrammatically(int row, int col) {
+        flagCell(row, col);
     }
 }
