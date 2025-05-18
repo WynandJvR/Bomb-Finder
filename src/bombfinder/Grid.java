@@ -328,9 +328,8 @@ public class Grid extends JFrame {
         return true;
     }
     
-    /**
-     * Restarts the game by resetting all game state and creating a new board
-     */
+    //Restarts the game by resetting all game state and creating a new board
+
     public void restartGame() {
         // Clear the grid panel
         grid.removeAll();
